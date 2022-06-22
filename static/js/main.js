@@ -32,6 +32,14 @@ class Main{
             selected.checked = false
             let dest = html.getElementById("connections-form")
             dest.innerHTML= ""
+
+            let freqInputDirect = [html.getElementById("Dfreq")]
+            let freqInputCoax = [html.getElementById("cr"),html.getElementById("ir"),html.getElementById("or")]
+            let freqInputRect = [html.getElementById("l1"),html.getElementById("h1"),html.getElementById("l2"),html.getElementById("h2")]
+            
+            for (let x in freqInputDirect) freqInputDirect[x].disabled = true
+            for (let x in freqInputCoax) freqInputCoax[x].disabled = true
+            for (let x in freqInputRect) freqInputRect[x].disabled = true
         }
 
         let form = html.getElementById("add-form")

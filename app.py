@@ -37,15 +37,15 @@ class DataProcessor:
                 case "direct":
                     qubits.append(float(q[0]) / 2)
                 case "coaxmon":
-                    if ((math.pi * float(q[2]) - math.pi * float(q[1])) <= 0 or (math.pi * float(q[2]) - math.pi * float(q[0])) <= 0 ):
-                        return {'resposnse': "error", 'msg': "Error, the outer radius must "
+                    if ((float(q[2]) <= float(q[1])) or (float(q[2]) <= float(q[0])) or (float(q[1]) <= float(q[0]))):
+                        return {'response': "error", 'msg': "Error, the outer radius must "
                                                              "be greater than the inner radius and center raduis for coaxmons"}
                     qubits.append(
                         (math.pi * float(q[0]) ** 2 / (math.pi * float(q[2]) ** 2 - math.pi * float(q[1]) ** 2) / 2))
                 case "rectanglemon":
                     qubits.append((float(q[0]) * float(q[1]) + float(q[2]) * float(q[3])) / 2)
                 case _:
-                    return {'resposnse': "error", 'msg': "Error, wrong type for qubit"}
+                    return {'response': "error", 'msg': "Error, wrong type for qubit"}
 
         freq = [" {}\u03C3<sub>z,{}</sub>".format(qubits[x], x) for x in range(len(qubits))]
         bais = []
@@ -130,4 +130,4 @@ def gnu_terry_pratchett(resp):
 if __name__ == '__main__':
     #this app is too small to justify using factory properly
     initAssets(app)
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0', debug =True)
