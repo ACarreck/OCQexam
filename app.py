@@ -130,4 +130,4 @@ def gnu_terry_pratchett(resp):
 if __name__ == '__main__':
     #this app is too small to justify using factory properly
     initAssets(app)
-    app.run(host='0.0.0.0', debug =True)
+    app.run(host='0.0.0.0')
