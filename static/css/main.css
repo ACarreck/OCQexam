@@ -1,0 +1,71 @@
+*{
+    font-family: "RM Neue",sans-serif;
+}
+
+.popup {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 10001;
+    overflow: auto;
+}
+
+
+button {
+  align-items: center;
+  appearance: button;
+  background-color: #0276FF;
+  border-radius: 8px;
+  border-style: none;
+  box-shadow: rgba(255, 255, 255, 0.26) 0 1px 2px inset;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-size: 100%;
+  line-height: 1.15;
+  margin: 0;
+  padding: 10px 21px;
+  text-align: center;
+  text-transform: none;
+  transition: color .13s ease-in-out,background .13s ease-in-out,opacity .13s ease-in-out,box-shadow .13s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+button:active {
+  background-color: #006AE8;
+}
+
+button:hover {
+  background-color: #1C84FF;
+}
+
+.hidden {
+    display: none;
+}
+
+.popup.visible {
+    display: block;
+}
+
+.popup-container {
+    position: relative;
+    border-radius: 25px;
+    background: white;
+    /*width: 90%;*/
+    padding: 25px;
+    box-shadow: 3px -3px 0px 0px rgba(0,0,0,0.3);
+    border: 1px solid black;
+}
+
+.error {
+    background-color: red;
+    color: white;
+
+}
+

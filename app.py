@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+from flask_assets import Bundle, Environment
 import json
 import math
 
@@ -10,51 +11,79 @@ app = Flask(__name__)
 def hello_world():
     return render_template("main.html")
 
+'''Json Data for the hamiltionain is formatted as follows
+    QubitType
+    QubitParameters
+    weights
+you can call this function yourself in theory, just send an xml request.
+You're on your own tho... It's recommended you use the front end to interact'''
 
-@app.route('/get_hamiltonian', methods = ['POST'])
+
+@app.route('/get_hamiltonian', methods = ['GET','POST'])
 def getHamiltonian():
-    jsdata = request.form['javascript_data']
-    data = json.loads(jsdata)
-
+    data = request.get_json()
+    print(data)
     qubits = []
-    for x in range(data.qubitParameters.length):
-        q = data.qubitParameters[x]
-        match data.qubitType[x]:
+    for x in range(len(data['qubitParameters'])):
+        q = data['qubitParameters'][x]
+        match data['qubitType'][x]:
             case "direct":
-                qubits.append(q)
+                qubits.append(float(q[0])/2)
             case "coaxmon":
-                qubits.append(math.Pi*q[0]**2/(math.Pi*q[2]**2 - math.Pi*q[1]**2))
+                if((math.pi*float(q[2])**2 - math.pi*float(q[1])**2) <= 0):
+                    return {'resposnse': "error", 'msg': "Error, the outer raduis must "
+                                                         "be greater than the inner raduis for coaxmons"}
+                qubits.append((math.pi*float(q[0])**2/(math.pi*float(q[2])**2 - math.pi*float(q[1])**2)/2))
             case "rectanglemon":
-                qubits.append(q[0] * q[1] + q[2] * q[3])
+                qubits.append((float(q[0]) * float(q[1]) + float(q[2]) * float(q[3]))/2)
             case _:
-                return "error"
+                return {'resposnse': "error", 'msg': "Error, wrong type for qubit"}
 
-
-    freq = ["{}z{}".format(qubits[x],x) for x in range(qubits.length)]
+    freq = [" {}\u03C3<sub>z,{}</sub>".format(qubits[x],x) for x in range(len(qubits))]
     bais = []
 
-    for x in range(data.weightMatrix.length):
-        elmtX = data.weightMatrix[x]
-        for y in range(elmtX.legth):
-            elmt = elmtX[y]
-            if (elmt != 0):
-                 bais.append("{}z{}z{}".format(elmt, x+1,y+1))
+    print(data['weights'])
+    for w in data['weights']:
+        if(float(w[0]) > 0):
+            bais.append(" {}\u03C3<sub>x,{}</sub>\u03C3<sub>x,{}</sub>".format(w[0], w[1],w[2]))
 
 
-    hString = "h ="
+    hString = "H ="
     for x in freq:
-         hString += x
+         hString += x + " +"
     for x in bais:
-        hString += x
+        hString += x + " +"
 
-    return hString
+    print(hString)
+    hString = hString[:-1]
+    return {'response': "success", 'msg':hString}
 
 
-#Json Data as follows
-#QubitType
-#QubitParameters
-#WeightsMatrix
+def initAssets(app):
+    assets = Environment(app)
 
+    main_js = Bundle(
+        "js/main.js",
+        output="gen/main.js"
+    )
+
+    assets.register("main_js", main_js)
+
+    home_css = Bundle(
+        "css/main.css",
+        output="gen/home.css",
+    )
+    assets.register("home_css", home_css)
+
+@app.after_request
+def gnu_terry_pratchett(resp):
+    # "A man is not dead while his name is still spoken."
+    # - Going Postal, Chapter 4
+    # http://www.gnuterrypratchett.com/
+    resp.headers.add("X-Clacks-Overhead", "GNU Terry Pratchett")
+    return resp
 
 if __name__ == '__main__':
-    app.run()
+    #this app is too small to justify using factory
+    initAssets(app)
+    app.run(debug=True)
