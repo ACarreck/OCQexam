@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Amber's submission</title>
+    {% assets "home_css" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    {% endassets %}
+    {% assets "main_js" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+    {% endassets %}
+</head>
+<body>
+
+<div id = "output">
+<span id="sucessOut">The hamiltonain is </span> <span id="dataOut"></span>
+</div>
+
+<button id="add-button">add qubit</button>
+<br>
+<br>
+<button id="source">open source code</button>
+<button id="maths"> download maths</button>
+
+
+<div id="add-modal" class="popup">
+    <div id="add-modal-container" class="popup-container">
+        <form id="add-form">
+            <label class="add-radio">
+                <input type="radio" name="radio" value="direct" class="qubit-checkbox">
+                <span class="label-text checkable">direct input</span>
+            </label>
+            <br>
+            qubit frequency <input type="number" id="Dfreq" disabled>
+            <br>
+            <label class="add-radio">
+                <input type="radio" name="radio" value="coax" class="qubit-checkbox">
+                <span class="label-text checkable">coaxmon</span>
+            </label>
+            <br>
+            center raduis <input type="number" id="cr" disabled>
+            inner raduis <input type="number" id="ir" disabled>
+            outer raduis <input type="number" id="or" disabled>
+            <br>
+            <label class="add-radio">
+                <input type="radio" name="radio" value ="rect" class="qubit-checkbox" >
+                <span class="label-text checkable">rectanglemon</span>
+            </label>
+            <br>
+            lenght 1 <input type="number" id="l1" disabled>
+            height 1 <input type="number" id="h1" disabled>
+            length 2 <input type="number" id="l2" disabled>
+            height 2 <input type="number" id="h2" disabled>
+            <br>
+        </form>
+        <br>
+        <form id="connections-form">
+
+        </form>
+        <template id="connection">
+                <div>
+                     <span class ="con-label"></span> <input type="number" value="0" class="con-number">
+                </div>
+            </template>
+        <button id="add">Add!</button>
+        <button id="cancel">Cancel</button>
+    </div>
+</div>
+
+</body>
+</html>
