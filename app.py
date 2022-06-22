@@ -37,9 +37,9 @@ class DataProcessor:
                 case "direct":
                     qubits.append(float(q[0]) / 2)
                 case "coaxmon":
-                    if ((math.pi * float(q[2]) ** 2 - math.pi * float(q[1]) ** 2) <= 0):
-                        return {'resposnse': "error", 'msg': "Error, the outer raduis must "
-                                                             "be greater than the inner raduis for coaxmons"}
+                    if ((math.pi * float(q[2]) - math.pi * float(q[1])) <= 0 or (math.pi * float(q[2]) - math.pi * float(q[0])) <= 0 ):
+                        return {'resposnse': "error", 'msg': "Error, the outer radius must "
+                                                             "be greater than the inner radius and center raduis for coaxmons"}
                     qubits.append(
                         (math.pi * float(q[0]) ** 2 / (math.pi * float(q[2]) ** 2 - math.pi * float(q[1]) ** 2) / 2))
                 case "rectanglemon":
