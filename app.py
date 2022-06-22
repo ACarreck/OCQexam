@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, send_file
 #A lightweight webhosting app
 from flask_assets import Bundle, Environment
 #support for flask
@@ -110,6 +110,14 @@ def hello_world():
     return render_template("main.html")
 
 
+@app.route('/download')
+def download():
+    try:
+        return send_file('pdf/mathsPortion.pdf',
+                         download_name='mathsPortion.pdf')
+    except Exception as e:
+        return str(e)
+
 @app.after_request
 def gnu_terry_pratchett(resp):
     # "A man is not dead while his name is still spoken."
@@ -118,7 +126,9 @@ def gnu_terry_pratchett(resp):
     resp.headers.add("X-Clacks-Overhead", "GNU Terry Pratchett")
     return resp
 
+
+
 if __name__ == '__main__':
     #this app is too small to justify using factory properly
     initAssets(app)
-    app.run(debug=True)
+    app.run(host='0.0.0.0')

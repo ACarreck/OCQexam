@@ -20,7 +20,7 @@ class Main{
         let openMaths = html.getElementById("maths")
 
         openSource.onclick = () => window.open("https://github.com/ACarreck/OCQexam")
-
+        openMaths.onclick = () => window.open('/download')
 
         let add = html.getElementById("add")
         let cancel = html.getElementById("cancel")

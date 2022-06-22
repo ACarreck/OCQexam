@@ -3,6 +3,9 @@ window.addEventListener("load", ()=>{
 })
 
 class Main{
+    //look this is a fever dream, as javascript always is
+    //The callbacks make me queasy
+    //but the page works nicely so
     constructor() {
         let html = document
 
@@ -17,7 +20,7 @@ class Main{
         let openMaths = html.getElementById("maths")
 
         openSource.onclick = () => window.open("https://github.com/ACarreck/OCQexam")
-
+        openMaths.onclick = () => window.open('/download')
 
         let add = html.getElementById("add")
         let cancel = html.getElementById("cancel")
