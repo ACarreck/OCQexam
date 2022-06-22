@@ -11,9 +11,12 @@ class Main{
         this.connections = []
 
         let modal = html.getElementById("add-modal")
-
         let newQ = html.getElementById("add-button")
 
+        let openSource = html.getElementById("source")
+        let openMaths = html.getElementById("maths")
+
+        openSource.onclick = () => window.open("https://github.com/ACarreck/OCQexam")
 
 
         let add = html.getElementById("add")
