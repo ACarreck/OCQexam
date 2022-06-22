@@ -113,8 +113,7 @@ def hello_world():
 @app.route('/download')
 def download():
     try:
-        return send_file('pdf/mathsPortion.pdf',
-                         download_name='mathsPortion.pdf')
+        return send_file('static/pdf/mathsPortion.pdf', as_attachment=True)
     except Exception as e:
         return str(e)
 
